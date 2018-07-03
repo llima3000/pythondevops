@@ -11,6 +11,7 @@ user="admin"
 password="Avi123$%"
 
 ssh = SSHClient()
+ssh.load_system_host_keys()
 ssh.connect(host, username=user, password=password)
 
 scp = SCPClient(ssh.get_transport())
