@@ -16,8 +16,19 @@ ssh.connect(host, username=user, password=password)
 
 scp = SCPClient(ssh.get_transport())
 scp.put('../../17.2.11-1p1/controller_patch.pkg', remote_path='/tmp')
-ssh.exec_command('sudo cp /tmp/ /var/lib/avi/upgrade_pkgs/')
+
+session = ssh.get_transport().open_session()
+session.set_combine_stderr(True)
+session.get_pty()
+session.exec_command('sudo cp /tmp/controller_patch.pkg /var/lib/avi/upgrade_pkgs/')
+stdin = session.makefile('wb', -1)
+stdout = session.makefile('rb', -1)
+stdin.write(password + '\n')
+stdin.flush()
+print(stdout.read().decode("utf-8"))
+session.close()
 scp.close()
+ssh.close()
 
 # logon controller
 api = ApiSession.get_session(controller_ip=host, username=user, password=password, api_version='17.2.10')
