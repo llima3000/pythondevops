@@ -15,7 +15,8 @@ ssh.load_system_host_keys()
 ssh.connect(host, username=user, password=password)
 
 scp = SCPClient(ssh.get_transport())
-scp.put('../../17.2.11-1p1/controller_patch.pkg', remote_path='/var/lib/avi/upgrade_pkgs/')
+scp.put('../../17.2.11-1p1/controller_patch.pkg', remote_path='/tmp')
+ssh.exec_command('sudo cp /tmp/ /var/lib/avi/upgrade_pkgs/')
 scp.close()
 
 # logon controller
