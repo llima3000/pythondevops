@@ -6,7 +6,7 @@ from paramiko import SSHClient
 from scp import SCPClient
 from avi.sdk.avi_api import ApiSession
 
-host="10.91.55.5"
+host="10.91.55.11"
 user="admin"
 password="Avi123$%"
 
