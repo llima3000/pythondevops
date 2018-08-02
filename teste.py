@@ -14,8 +14,8 @@ username = "admin"
 password = "Avi123$%"
 tenant = "admin"
 
-from_email = "avi@socgen.com"
-search_domain = "socgen.com"
+from_email = "avi@test.com"
+search_domain = "test.com"
 dnssrvlist = [{'addr': '8.8.8.8', 'type': 'V4'}, 
               {'addr': '8.8.4.4', 'type': 'V4'}]
 ntpsrvlist = [{'addr': '0.us.pool.ntp.org', 'type': 'DNS'},
