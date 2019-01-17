@@ -1,0 +1,11 @@
+AVIControllers non prod
+wgcqbt1uticn01 - SEGs: btgwblb01
+
+wgcpbt1uticn01 - SEGs: btctolb01, btgwblb01, btutilb01
+
+
+
+AVIControllers prod
+caygbt1uticn01 - SEGs: btctolb01, btgbmlb01, btgwblb01
+
+caypbt1uticn01 - SEGs: btctolb01, btgbmlb01, btgwblb01, btutilb01

@@ -1,0 +1,56 @@
+Folow this step inside the docker container avaliable. Carl has this controller.
+
+Tu run the converion you will need all files on same directory:
+    - VIP_Master_List.csv -> csv file generated from a spreadh List provided from Chris with 
+        all virtual services and their properties
+    - irules_conv.yml - list matching irules to specific Avi config
+    - bigip.conf -> f5 bigip.conf config file
+    - changeip.py -> script to change the IP address and virtual service name acordingly the 
+        VIP_Master_List.csv
+    - parsing_yaml.py -> script to change the SE group and seting the use vip as SNAT option, 
+        can also set a new cloud connector
+    - run-playbook.sh -> This script will ask the controller IP admin username and password 
+        then will run the ansible playbook using this parameters
+
+
+Steps: 
+1 - First tun the the following script. The output will be a file called f5output.cfg, this is the bigip.conf with all ip address and vs names founded changed acordignly
+./changeip.py 
+
+2 - Run the script to get the correct list of virtual services per controller/avicontroller
+./list_vs.py avicontroller
+
+2 - Run the f5_converter with the following command
+f5_converter.py -f f5output.cfg --controller_version 17.2.10 --ansible --cloud_name na01 --custom_config irules_conv.yml --vs_filter <list>
+
+3 - Run the following script to adjust the SE group and use vip as source nat. The result will be the a file called baml_avi_playbook.yml
+./parsing_yaml.py
+
+4 - Run the command and answer the questions about the controller username and password:
+./run-playbook.sh 
+
+
+
+
+
+
+
+ip address ending 285 - wrong ip address
+
+
+AV-52374
+AV-51542
+AV-47800
+
+D3fault1
+
+17.2.10-3p2 - When VIP to SNAT detach reatach
+17.2.10-3p3 - ICMP issue
+17.2.10-3p4 - DNS with UDP fastpath preserv IP
+
+
+Hy @here, I’m needing some help about patch info to send to the user. Let’s go to my questions:
+
+1 - Client has 3 fix to apply: 17.2.10-3p2, 17.2.10-3p3 and 17.2.10-3p4, as I was informed I just need apply the last one, right?
+2 - How can I check if the client has access to all this patches through the portal?
+3 - I saw a message saying that the patches for version 17.2.10 nuud be applyed on controller first, this mean a different process then the usual one? How should I proceed?

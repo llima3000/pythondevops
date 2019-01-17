@@ -1,0 +1,62 @@
+irule_custom_config.yml : #Must have "irule_custom_config:" at top of file now when using the --custom_config flag in F5_convertor.py 
+
+- rule_name: GLP_Permitted_IP
+  type: NetworkSecurityPolicy
+  avi_config:
+    - index: 1
+      enable: true
+      name: GLP_Permitted_IP
+      age: 0
+      action: NETWORK_SECURITY_POLICY_ACTION_TYPE_ALLOW
+      match:
+          client_ip:
+              group_refs:
+                  - '/api/ipaddrgroup/?name=GLP_Permitted_IP'
+              match_criteria: IS_IN
+      log: true
+
+- rule_name: http2https
+  type: HTTPPolicySet
+  avi_config:
+    name: http2https
+    http_request_policy:
+        rules:
+            - index: 1
+              redirect_action:
+                  keep_query: true
+                  status_code: HTTP_REDIRECT_STATUS_CODE_302
+                  protocol: HTTPS
+                  port: 443
+              enable: true
+              name: Rule 1
+    is_internal_policy: false
+
+- rule_name: swiftweb_p_443_whitelist_p_443
+  type: NetworkSecurityPolicy
+  avi_config:
+    - index: 1
+      enable: true
+      name: swiftweb_p_443_whitelist_p_443
+      age: 0
+      action: NETWORK_SECURITY_POLICY_ACTION_TYPE_DENY
+      match:
+          client_ip:
+              group_refs:
+                  - '/api/ipaddrgroup/?name=swiftweb_p_443_whitelist_p_443'
+              match_criteria: IS_IN
+      log: true
+
+- rule_name: swiftweb_p_443uat_whitelist_p_443
+  type: NetworkSecurityPolicy
+  avi_config:
+    - index: 1
+      enable: true
+      name: swiftweb_p_443uat_whitelist_p_443
+      age: 0
+      action: NETWORK_SECURITY_POLICY_ACTION_TYPE_DENY
+      match:
+          client_ip:
+              group_refs:
+                  - '/api/ipaddrgroup/?name=swiftweb_p_443uat_whitelist_p_443'
+              match_criteria: IS_IN
+      log: true
